@@ -47,7 +47,7 @@ let
     ++ [ ./0001-Add-extra-version-CachyOS.patch ];
 
   # There are some configurations set by the PKGBUILD
-  pkgbuildConfig = with cachyConfig;
+  pkgbuildConfig =
     basicCachyConfig
     ++ cpuSchedConfig
     ++ [
@@ -71,6 +71,8 @@ let
       "--set-str DEFAULT_NET_SCH fq"
     ]
     ++ ltoConfig
+    ++ bbr3Config
+    ++ ArchOptimizeConfig
     ++ ticksHzConfig
     ++ tickRateConfig
     ++ preemptConfig
@@ -132,6 +134,19 @@ let
     else if cachyConfig.useLTO == "none" then
       [ ]
     else throw "Unsupported cachyos _use_llvm_lto";
+
+  # architecture optimization
+  ArchOptimizeConfig = let Arch = cachyConfig.archOptimize; in if Arch != "none" then [ "-d CONFIG_GENERIC_CPU" "-e CONFIG_M${Arch}" ] else [ ];
+
+  # bbr3 enable ?
+  bbr3Config =
+    if cachyConfig.withBBR3 then [
+      "-m TCP_CONG_CUBIC"
+      "-d DEFAULT_CUBIC"
+      "-e TCP_CONG_BBR"
+      "-e DEFAULT_BBR"
+      "--set-str DEFAULT_TCP_CONG bbr"
+    ] else [ ];
 
   # _tickrate defaults to "full"
   tickRateConfig =

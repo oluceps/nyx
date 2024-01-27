@@ -182,7 +182,13 @@ in
   linuxPackages_cachyos-hardened = cachyosPackages.cachyos-hardened;
   linuxPackages_cachyos-lto = cachyosPackages.cachyos-lto;
   linuxPackages_cachyos-sched-ext = cachyosPackages.cachyos-sched-ext;
+  linuxPackages_cachyos-lto-zen3 = cachyosPackages.cachyos-lto-zen3;
+  linuxPackages_cachyos-zen3 = cachyosPackages.cachyos-zen3;
+  linuxPackages_cachyos-lto-zen4 = cachyosPackages.cachyos-lto-zen4;
   linuxPackages_cachyos-server = cachyosPackages.cachyos-server;
+  linuxPackages_cachyos-server-lto-zen3 = cachyosPackages.cachyos-server-lto-zen3;
+  linuxPackages_cachyos-server-lto-broadwell = cachyosPackages.cachyos-server-lto-broadwell;
+  linuxPackages_cachyos-server-lto = cachyosPackages.cachyos-server-lto;
 
   luxtorpeda = final.callPackage ../pkgs/luxtorpeda {
     luxtorpedaVersion = importJSON ../pkgs/luxtorpeda/version.json;

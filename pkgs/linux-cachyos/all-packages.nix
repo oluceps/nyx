@@ -17,6 +17,7 @@ let
     inherit (mainVersions.zfs) rev hash;
   };
 in
+(import ./custom.nix { inherit mkCachyKernel stdenvLLVM; }) //
 {
   inherit mainVersions mkCachyKernel;
 

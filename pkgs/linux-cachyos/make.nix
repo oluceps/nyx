@@ -11,6 +11,8 @@
 , basicCachy ? true
 , cpuSched ? "cachyos"
 , useLTO ? "none"
+, withBBR3 ? true
+, archOptimize ? "none"
 , ticksHz ? 500
 , tickRate ? "full"
 , preempt ? "full"
@@ -30,6 +32,8 @@ let
     inherit taste versions basicCachy
       cpuSched
       useLTO
+      withBBR3
+      archOptimize
       ticksHz
       tickRate
       preempt
