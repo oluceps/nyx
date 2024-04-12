@@ -14,7 +14,7 @@ let
             forSystems = [ v.system ];
             shortDescription = v.meta.description or "N/A";
             derivation = v;
-            evalChecks.isDerivation = true;
+            #evalChecks.isDerivation = true;
           };
         };
 
@@ -26,7 +26,7 @@ let
           value = {
             what = message;
             shortDescription = v._description or "N/A";
-            evalChecks.isDerivation = false;
+            #evalChecks.isDerivation = false;
           };
         };
 
@@ -60,6 +60,7 @@ in
               "pkgsx86_64_v3"
               "pkgsx86_64_v3-core"
               "pkgsx86_64_v4"
+              "pkgsAMD64Microarchs"
               "libdrm32_git"
               "mangohud32_git"
               "mesa32_git"

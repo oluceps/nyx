@@ -18,6 +18,7 @@ let
     quote = { version = "1.0.33"; hash = "sha256-Umf8pElgKGKKlRYPxCOjPosuavilMCV54yLktSApPK4="; };
     syn = { version = "2.0.39"; hash = "sha256-I+eLkPL89F0+hCAyzjLj8tFUW6ZjYnHcvyT6MG2Hvno="; };
     unicode-ident = { version = "1.0.12"; hash = "sha256-M1S5rD+uH/Z1XLbbU2g622YWNPZ1V5Qt6k+s6+wP7ks="; };
+    paste = { version = "1.0.14"; hash = "sha256-3jFFrwgCTeqfqZFPOBoXuPxgNN+wDzqEAT9/9D8p7Uw="; };
   };
 in
 gitOverride (current: {
@@ -58,6 +59,9 @@ gitOverride (current: {
   version = builtins.substring 0 (builtins.stringLength prev.mesa.version) current.rev;
 
   postOverride = prevAttrs: {
+    nativeBuildInputs = with final; [ rust-cbindgen ] ++ prevAttrs.nativeBuildInputs;
+    buildInputs = with final; [ rust-cbindgen ] ++ prevAttrs.buildInputs;
+
     mesonFlags =
       builtins.map
         (builtins.replaceStrings [ "virtio-experimental" ] [ "virtio" ])
@@ -76,17 +80,6 @@ gitOverride (current: {
       )
       ++ [
         ./gbm-backend.patch
-        # frontends/va: Only export one handle for contiguous planes
-        # Fixes VAAPI in Chromium
-        # https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/26165
-        (final.fetchpatch {
-          url = "https://gitlab.freedesktop.org/mesa/mesa/-/commit/eff9f33d49db7e7562ed5b93551dcf21b78b916a.patch";
-          hash = "sha256-eSWG3iu7BpasWLYSHy6dHeRCh8lTwgq29cFi+PHZTXI=";
-        })
-        (final.fetchpatch {
-          url = "https://gitlab.freedesktop.org/mesa/mesa/-/commit/0b6b9cb00d8ae814b9a3c90ba811f1e9cec24d32.patch";
-          hash = "sha256-ZJ1XAhtEoutQ4EXVlsBKmF9ehWGPQ0OzOmqvE8E0a/I=";
-        })
       ];
 
     # expose gbm backend and rename vendor (if necessary)
@@ -120,7 +113,8 @@ gitOverride (current: {
       + (cargoSubproject "proc-macro2")
       + (cargoSubproject "quote")
       + (cargoSubproject "syn")
-      + (cargoSubproject "unicode-ident");
+      + (cargoSubproject "unicode-ident")
+      + (cargoSubproject "paste");
 
     # move new backend to its own output (if necessary)
     postInstall =
