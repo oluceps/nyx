@@ -193,6 +193,10 @@ in
   linuxPackages_cachyos-server-lto-broadwell = cachyosPackages.cachyos-server-lto-broadwell;
   linuxPackages_cachyos-server-lto = cachyosPackages.cachyos-server-lto;
 
+  # Don't build modules for linux_cachyos-rc kernel
+  linuxPackages_cachyos-rc = cachyosPackages.cachyos-rc;
+  linux_cachyos-rc = cachyosPackages.cachyos-rc.kernel;
+
   luxtorpeda = final.callPackage ../pkgs/luxtorpeda {
     luxtorpedaVersion = importJSON ../pkgs/luxtorpeda/version.json;
   };
