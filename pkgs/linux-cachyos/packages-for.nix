@@ -21,7 +21,6 @@
 , hugePages ? "always"
 , withDAMON ? false
 , withNTSync ? true
-, withBCacheFSPatch ? false
 , withHDR ? true
 , withoutDebug ? false
 , description ? "Linux EEVDF-BORE scheduler Kernel by CachyOS with other patches and improvements"
@@ -43,7 +42,6 @@ let
       hugePages
       withDAMON
       withNTSync
-      withBCacheFSPatch
       withHDR
       withoutDebug
       description
@@ -89,8 +87,7 @@ let
 
   supportedPlatforms = [ (with lib.systems.inspect.patterns; isx86_64 // isLinux) "x86_64-linux" ];
 
-  versionSuffix = "+C${nyxUtils.shorter versions.config.rev}+P${nyxUtils.shorter versions.patches.rev}"
-    + lib.strings.optionalString withBCacheFSPatch "+bcachefs";
+  versionSuffix = "+C${nyxUtils.shorter versions.config.rev}+P${nyxUtils.shorter versions.patches.rev}";
 in
 packagesWithRightPlatforms // {
   _description = "Kernel and modules for ${description}";
