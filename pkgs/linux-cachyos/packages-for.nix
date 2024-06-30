@@ -24,7 +24,7 @@
 , withHDR ? true
 , withoutDebug ? false
 , description ? "Linux EEVDF-BORE scheduler Kernel by CachyOS with other patches and improvements"
-, withUpdateScript ? false
+, withUpdateScript ? null
 , zfs-source
 , packagesExtend ? null
 }:
